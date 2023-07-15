@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Team No Stress Blog</title>
+    <style>
+        /* Global styles */
+        body {
+            font-family: initial;
+            margin: 0;
+            padding: 0;
+            color:rgb(12, 9, 196);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            background-color: #a7a7a7;
+            color: #f8f8f8;
+        }
+
+        /* Header styles */
+        header {
+            background-color: blue;
+            padding: 20px;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        /* Logo styles */
+        .logo {
+            cursor: pointer;
+            color: white;
+            text-shadow: #555;
+            box-shadow: blue;
+            font-family: initial;
+        }
+
+        /* Toggle button styles */
+        .toggle-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 10px;
+            background-color: #ddd;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .toggle-btn .slider {
+            width: 26px;
+            height: 26px;
+            background-color: #fff;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        /* Dark mode styles for the toggle button */
+        body.dark-mode .toggle-btn {
+            background-color: #555;
+        }
+
+        body.dark-mode .toggle-btn .slider {
+            transform: translateX(30px);
+        }
+
+        /* Navigation styles */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+            position: relative;
+        }
+
+
+        ul.nav-content {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      background-color: auto;
+      padding: 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 50%;
+      width: 100px;
+      transform: translateX(-200px);
+      transition: transform 0.3s ease-in-out;
+      margin: auto;
+    }
+
+
+        nav ul li:first-child {
+            margin-left: 0;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: green;
+            font-weight: bold;
+            font-size: larger;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #ddd;
+        }
+
+        /* Submenu styles */
+        .submenu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #333;
+            padding: 10px;
+            width: 200px;
+            z-index: 999;
+        }
+
+        .has-submenu:hover .submenu {
+            display: block;
+        }
+
+        .submenu li {
+            margin-bottom: 5px;
+        }
+
+        .submenu a {
+            color: #fff;
+            font-weight: normal;
+        }
+
+        /* Mobile menu styles */
+        .mobile-menu {
+            display: none;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        /* Mobile menu open styles */
+        .open {
+            display: block;
+        }
+
+        /* Main Content styles */
+        main {
+            margin: 20px;
+        }
+
+        section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .post {
+            margin-bottom: 20px;
+        }
+
+        .post h2 {
+            margin: 0;
+        }
+
+        .post .meta {
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .post .content {
+            line-height: 1.5;
+        }
+
+        .post .read-more {
+            color: #333;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .post .read-more:hover {
+            color: #555;
+        }
+
+        /* Carousel styles */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            font-size: small;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .carousel-slide {
+            display: flex;
+            width: 300%;
+            height: 100%;
+            animation: slide 10s infinite;
+        }
+
+        .carousel-slide img {
+            width: 33.333%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @keyframes slide {
+            0% {
+                transform: translateX(0%);
+            }
+            33.333% {
+                transform: translateX(-100%);
+            }
+            66.666% {
+                transform: translateX(-200%);
+            }
+            100% {
+                transform: translateX(0%);
+            }
+        }
+
+        /* YouTube container styles */
+        .youtube-container {
+            margin-bottom: 20px;
+        }
+
+        .youtube-box {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .youtube-box .youtube-item {
+            width: calc(50% - 10px);
+            margin-bottom: 20px;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .youtube-box .youtube-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .youtube-box .youtube-item h3 {
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        .youtube-box .youtube-item .youtube-player {
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%;
+            position: relative;
+        }
+
+        .youtube-box .youtube-item .youtube-player iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .youtube-box .youtube-item .button {
+            margin-top: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .youtube-box .youtube-item .button:hover {
+            background-color: #555;
+        }
+
+        /* Image box styles */
+        .image-boxes {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .image-box {
+            width: 150px;
+            height: 150px;
+            background-color: #ddd;
+            margin: 10px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            position: relative;
+        }
+
+        .image-box p {
+            margin: 10px;
+            text-align: center;
+            color: #333;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 5px;
+            font-weight: bold;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: blue;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Music icon styles */
+        .music-icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .music-icons img {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .music-icons .current-music {
+            color: yellow;
+            animation: slideName 10s infinite;
+        }
+
+        @keyframes slideName {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        /* Mobile navigation styles */
+        .mobile-navigation {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 250px;
+            background-color: #333;
+            padding: 20px;
+            z-index: 999;
+            transform: translateX(100%);
+            transition: transform 0.3s;
+        }
+
+        .mobile-navigation.open {
+            transform: translateX(0%);
+        }
+
+        .mobile-navigation ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mobile-navigation ul li {
+            margin-bottom: 15px;
+        }
+
+        .mobile-navigation ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .mobile-navigation ul li a:hover {
+            color: #ddd;
+        }
+
+        .mobile-navigation .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+
+        
+        /* Responsive styles */
+        @media screen and (max-width: 768px) {
+            header {
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            main {
+                margin-top: 20px;
+            }
+
+            section {
+                margin-bottom: 20px;
+            }
+
+            .carousel-container {
+                margin-bottom: 0;
+            }
+
+            .youtube-container {
+                width: 100%;
+            }
+
+            .youtube-container:nth-child(odd) {
+                margin-right: 0;
+            }
+
+            .youtube-box .youtube-item {
+                width: 100%;
+            }
+
+            /* Mobile submenu styles */
+            .has-submenu .submenu {
+                display: none;
+                position: static;
+                background-color: transparent;
+                padding: 0;
+                width: auto;
+                box-shadow: none;
+            }
+
+            .has-submenu .submenu li {
+                margin-bottom: 0;
+            }
+
+            .has-submenu .submenu a {
+                color: #fff;
+                font-weight: bold;
+            }
+
+            .has-submenu.open .submenu {
+                display: block;
+            }
+        }
+    </style>
+    <script>
+        let currentMusic = null;
+
+        function toggleDarkMode() {
+            const body = document.querySelector("body");
+            body.classList.toggle("dark-mode");
+        }
+
+        function toggleMobileMenu() {
+            const mobileNavigation = document.querySelector(".mobile-navigation");
+            mobileNavigation.classList.toggle("open");
+        }
+
+        function closeMobileMenu() {
+            const mobileNavigation = document.querySelector(".mobile-navigation");
+            mobileNavigation.classList.remove("open");
+        }
+
+        function toggleMobileSubMenu(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const parentItem = event.target.closest("li");
+            parentItem.classList.toggle("open");
+        }
+
+        function playMusic(musicUrl) {
+            const audioPlayer = document.getElementById("audio-player");
+            const currentMusicName = document.getElementById("current-music-name");
+
+            if (musicUrl === currentMusic) {
+                if (audioPlayer.paused) {
+                    audioPlayer.play();
+                } else {
+                    audioPlayer.pause();
+                }
+            } else {
+                currentMusic = musicUrl;
+                audioPlayer.src = musicUrl;
+                audioPlayer.play();
+            }
+
+            audioPlayer.addEventListener("play", function() {
+                currentMusicName.textContent = getMusicName(musicUrl);
+                currentMusicName.classList.add("current-music");
+            });
+
+            audioPlayer.addEventListener("pause", function() {
+                currentMusicName.classList.remove("current-music");
+            });
+        }
+
+        function getMusicName(musicUrl) {
+            const fileName = musicUrl.substring(musicUrl.lastIndexOf("/") + 1);
+            return fileName.substring(0, fileName.lastIndexOf("."));
+        }
+
+        function refreshPage() {
+            window.location.reload();
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const hasSubmenuItems = document.querySelectorAll(".has-submenu");
+            hasSubmenuItems.forEach(function(item) {
+                item.addEventListener("click", toggleMobileSubMenu);
+            });
+        });
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1 class="logo" onclick="refreshPage()">Team No Stress   <P> <h3>"kumanyokana"</h3>
+        </P></h1>
+        <div class="music-icons">
+            <img src="https://goforusschools.com/wp-content/uploads/2023/07/OIP-2.jpeg" alt="Music Icon 1" onclick="playMusic('https://goforusschools.com/wp-content/uploads/2023/07/HAPPY-Birthday-Song-–-Happy-Birthday-to-You.mp3')">
+            <img src="https://goforusschools.com/wp-content/uploads/2023/07/OIP-2.jpeg" alt="Music Icon 2" onclick="playMusic('https://goforusschools.com/wp-content/uploads/2023/07/Nzigulilawo-Egulu-by-Judith-Babirye-Non-Stop-Worship-Album.mp3')">
+            <img src="https://goforusschools.com/wp-content/uploads/2023/07/OIP-2.jpeg" alt="Music Icon 3" onclick="playMusic('song3.mp3')">
+            <img src="https://goforusschools.com/wp-content/uploads/2023/07/OIP-2.jpeg" alt="Music Icon 3" onclick="playMusic('song3.mp3')">
+            <img src="https://goforusschools.com/wp-content/uploads/2023/07/OIP-2.jpeg" alt="Music Icon 3" onclick="playMusic('song3.mp3')">
+            <img src="https://goforusschools.com/wp-content/uploads/2023/07/OIP-2.jpeg" alt="Music Icon 3" onclick="playMusic('song3.mp3')">
+            <img src="https://goforusschools.com/wp-content/uploads/2023/07/OIP-2.jpeg" alt="Music Icon 3" onclick="playMusic('song3.mp3')">
+            <img src="https://goforusschools.com/wp-content/uploads/2023/07/OIP-2.jpeg" alt="Music Icon 3" onclick="playMusic('song3.mp3')">
+
+        </footer>
+        <audio id="audio-player" controls style="display: none;"></audio>
+        <div id="current-music-name">No Music Playing</div>
+        </div>
+        <div class="toggle-btn" onclick="toggleDarkMode()">
+            <div class="slider"></div>
+        </div>
+        <div class="mobile-menu" onclick="toggleMobileMenu()">&#9776;</div>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li class="has-submenu">
+                <a href="#">Kojja &amp; Senga</a>
+                <ul class="submenu">
+                    <li><a href="#">Abanoonya</a></li>
+                    <li><a href="#">Couples</a></li>
+                    <li><a href="#">Lovezone</a></li>
+                    <li><a href="#">Singles</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Business</a></li>
+            <li><a href="#">Gossip</a></li>
+            <li><a href="#">Entertainment</a></li>
+            <li><a href="#">Music</a></li>
+            <li><a href="#">Violence</a></li>
+            <li><a href="#">Talents</a></li>
+            <li><a href="#">Health</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li class="has-submenu">
+                <a href="#">Dashboard</a>
+                <ul class="submenu">
+                    <li><a href="#">Login</a></li>
+                    <li><a href="#">Register</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-navigation">
+        <div class="close-btn" onclick="closeMobileMenu()">X</div>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li class="has-submenu">
+                <a href="#">Kojja &amp; Senga</a>
+                <ul class="submenu">
+                    <li><a href="#">Abanoonya</a></li>
+                    <li><a href="#">Couples</a></li>
+                    <li><a href="#">Lovezone</a></li>
+                    <li><a href="#">Singles</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Business</a></li>
+            <li><a href="#">Gossip</a></li>
+            <li><a href="#">Entertainment</a></li>
+            <li><a href="#">Music</a></li>
+            <li><a href="#">Violence</a></li>
+            <li><a href="#">Talents</a></li>
+            <li><a href="#">Health</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li class="has-submenu">
+                <a href="#">Dashboard</a>
+                <ul class="submenu">
+                    <li><a href="#">Login</a></li>
+                    <li><a href="#">Register</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <main>
+
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <style>
+            .headline-container {
+              position: relative;
+              width: 99.5%;
+              height: 40px;
+              margin-left: 2px;
+              border-radius: 16px;
+              font-size: medium;
+              overflow: hidden;
+            }
+        
+            .headline {
+              position: absolute;
+              white-space: nowrap;
+              font-size: 20px; /* Adjusted font size */
+              font-family: 'Times New Roman', Times, serif;
+              font-weight: bold;
+              color: #000; /* Adjusted text color */
+              animation: slide-left 5s linear infinite;
+            }
+        
+            .overlay-text {
+              position: absolute;
+              top: 0;
+              bottom: 0;
+              white-space: nowrap;
+              font-family: 'Times New Roman', Times, serif;
+              font-size: 26px; /* Adjusted font size */
+              color: white; /* Adjusted text color */
+              animation: slide-right 20s linear infinite; /* Adjusted animation duration */
+            }
+        
+            @keyframes slide-left {
+              0% { right: -100%; }
+              100% { right: 100%; }
+            }
+        
+            @keyframes slide-right {
+              0% { left: 100%; }
+              100% { left: -100%; }
+            }
+        
+            .flashing-lights {
+              position: relative;
+              width: 100%;
+              height: 50px;
+              background-color: black;
+              animation: flash 5s linear infinite; /* Adjusted animation duration */
+            }
+        
+            @keyframes flash {
+              50% { background-color: black; }
+              50% { background-color: rgb(63, 10, 253); } /* Adjusted flash colors */
+              00% { background-color: rgb(94, 94, 99); } /* Adjusted flash colors */
+            }
+          </style>
+        </head>
+        <body>
+          <div class="headline-container">
+            <div class="flashing-lights"></div>
+            <span class="headline">Breaking News: This is the Headline</span>
+            <span class="overlay-text">WELCOME TO FREE STRESS ZONE</span>
+          </div>
+        </body>
+        </html>
+        
+
+
+        <section>
+            <h2>Latest Posts</h2>
+            <div class="post">
+                <h2>Post Title 1</h2>
+                <div class="meta">Posted by John Doe on January 1, 2023</div>
+                <div class="content">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempor lectus eu cursus vestibulum. Integer sed vestibulum leo, nec rutrum velit.
+                </div>
+                <a href="#" class="read-more">Read More</a>
+            </div>
+            <div class="post">
+                <h2>Post Title 2</h2>
+                <div class="meta">Posted by Jane Smith on February 2, 2023</div>
+                <div class="content">
+                    Integer sed vestibulum leo, nec rutrum velit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempor lectus eu cursus vestibulum.
+                </div>
+                <a href="#" class="read-more">Read More</a>
+            </div>
+      
+            <section>
+                <h2>TNS Team</h2>
+                <div class="image-boxes">
+                    <div class="image-box">
+                        <p>1. President Kenny</p>
+                    </div>
+                    <div class="image-box">
+                        <p>2. Muloodizeki Ug</p>
+                    </div>
+                    <div class="image-box">
+                        <p>3. Hot girl</p>
+                    </div>
+                    <div class="image-box">
+                        <p>4. Dalton</p>
+                    </div>
+                    <div class="image-box">
+                        <p>5. Sera</p>
+                    </div>
+                    <div class="image-box">
+                        <p>6. Nigawise</p>
+                    </div>
+                    <div class="image-box">
+                        <p>7. Papakedz</p>
+                    </div>
+                    <div class="image-box">
+                        <p>8. Edrida</p>
+                    </div>
+                    <div class="image-box">
+                        <p>9. Kyokusima</p>
+                    </div>
+                    <div class="image-box">
+                        <p>10. Rose</p>
+                    </div>
+                    <div class="image-box">
+                        <p>11. Tayebwaloyce</p>
+                    </div>
+                    <div class="image-box">
+                        <p>12. Mbugua</p>
+                    </div>
+                    <div class="image-box">
+                        <p>13. Laura</p>
+                    </div>
+                    <div class="image-box">
+                        <p>14. Joram</p>
+                    </div>
+                    <div class="image-box">
+                        <p>15. Namagembe</p>
+                    </div>
+                    <div class="image-box">
+                        <p>16. Esawo</p>
+                    </div>
+                    <div class="image-box">
+                        <p>17. Kachude</p>
+                    </div>
+                    <div class="image-box">
+                        <p>18. Umaru</p>
+                    </div>
+                    <div class="image-box">
+                        <p>19. Wodooto</p>
+                    </div>
+                    <div class="image-box">
+                        <p>20. Serwaana</p>
+                    </div>
+                    <div class="image-box">
+                        <p>21. Ebako</p>
+                    </div>
+                    <div class="image-box">
+                        <p>22. Mariam</p>
+                    </div>
+                    <div class="image-box">
+                        <p>23. Kaseja</p>
+                    </div>
+                    <div class="image-box">
+                        <p>24. Mutwalo</p>
+                    </div>
+                    <div class="image-box">
+                        <p>25. Daniel</p>
+                    </div>
+                </div>
+                <div class="image-box">
+                    <p>26. Moreen Niwa</p>
+                </div>
+                </div>
+            </section>
+        <section>
+            <h2>YouTube Videos</h2>
+            <div class="youtube-container">
+                <div class="youtube-box">
+                    <div class="youtube-item">
+                        <h3>Video 1</h3>
+                        <div class="youtube-player">
+                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <button class="button">Play</button>
+                    </div>
+                    <div class="youtube-item">
+                        <h3>Video 2</h3>
+                        <div class="youtube-player">
+                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <button class="button">Play</button>
+                    </div>
+                </div>
+                <div class="youtube-box">
+                    <div class="youtube-item">
+                        <h3>Video 3</h3>
+                        <div class="youtube-player">
+                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <button class="button">Play</button>
+                    </div>
+                    <div class="youtube-item">
+                        <h3>Video 4</h3>
+                        <div class="youtube-player">
+                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <button class="button">Play</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h2>Headlines</h2>
+            <div class="carousel-container">
+                <div class="carousel-slide">
+                    <img src="https://goforusschools.com/wp-content/uploads/2023/01/go-for-us-03.jpg" alt="Slide 1">
+                    <img src="slide2.jpg" alt="Slide 2">
+                    <img src="slide3.jpg" alt="Slide 3">
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        &copy; 2023 Team No Stress Blog. All rights reserved.
+        <button onclick="refreshPage()">Refresh</button>
+</body>
+</html>
